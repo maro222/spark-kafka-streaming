@@ -1,0 +1,415 @@
+you need to start the ZooKeeper service and then start Kafka. Use the systemctl command to start a single-node ZooKeeper instance.
+
+sudo systemctl start zookeeper
+
+
+Now start the Kafka server and view the running status:
+
+sudo systemctl start kafka
+sudo systemctl status kafka
+
+links:
+https://kafka.apache.org/documentation/#gettingStarted
+
+chapter1.chatgpt:
+
+A durable record of all transactions refers to a reliable and long-lasting documentation of every transaction that has taken place. It ensures that the details of each transaction, such as the date, time, parties involved, and any relevant information, are recorded and preserved for future reference. This record is typically maintained in a secure and tamper-proof manner to ensure its integrity and accuracy.
+
+
+A commit log is a chronological record of all the changes or updates made to a database or a distributed system. It captures every transaction or operation performed on the system, including data modifications, additions, deletions, or any other relevant actions. The commit log serves as a reliable and sequential log of these operations, allowing for data recovery, replication, and synchronization in case of failures or system inconsistencies. It helps ensure data durability, consistency, and reliability in various applications and systems.
+
+
+Sure, I'd be happy to explain with an example.
+
+Let's say you have a messaging system that uses topics to organize and distribute messages. Each topic can have multiple partitions, and each partition is an ordered sequence of messages. When a producer sends a message to a topic, the message is written to the end of the partition for the corresponding topic. This is known as an append-only fashion because messages are only added to the end of the partition and cannot be modified or deleted.
+
+When a consumer wants to read messages from a topic, it can subscribe to one or more partitions of the topic. The consumer can then read messages from the partition in order, starting from the oldest message in the partition and working its way to the newest. Within a single partition, message time-ordering is guaranteed because messages are always appended to the end of the partition in the order they were produced.
+
+However, across multiple partitions of the same topic, there is no guarantee of message time-ordering. This is because each partition can have its own independent sequence of messages, and messages from different partitions may be produced at different times or in a different order. Therefore, if message time-ordering is important for your application, you may need to design your system to ensure that all related messages are produced to the same partition.
+
+
+
+
+chapter2.ubuntu:
+
+Option                                   Description                            
+------                                   -----------                            
+--alter                                  Alter the number of partitions,        
+                                           replica assignment, and/or           
+                                           configuration for the topic.         
+--at-min-isr-partitions                  if set when describing topics, only    
+                                           show partitions whose isr count is   
+                                           equal to the configured minimum.     
+--bootstrap-server <String: server to    REQUIRED: The Kafka server to connect  
+  connect to>                              to.                                  
+--command-config <String: command        Property file containing configs to be 
+  config property file>                    passed to Admin Client. This is used 
+                                           only with --bootstrap-server option  
+                                           for describing and altering broker   
+                                           configs.                             
+--config <String: name=value>            A topic configuration override for the 
+                                           topic being created or altered. The  
+                                           following is a list of valid         
+                                           configurations:                      
+                                         	cleanup.policy                        
+                                         	compression.type                      
+                                         	delete.retention.ms                   
+                                         	file.delete.delay.ms                  
+                                         	flush.messages                        
+                                         	flush.ms                              
+                                         	follower.replication.throttled.       
+                                           replicas                             
+                                         	index.interval.bytes                  
+                                         	leader.replication.throttled.replicas 
+                                         	local.retention.bytes                 
+                                         	local.retention.ms                    
+                                         	max.compaction.lag.ms                 
+                                         	max.message.bytes                     
+                                         	message.downconversion.enable         
+                                         	message.format.version                
+                                         	message.timestamp.difference.max.ms   
+                                         	message.timestamp.type                
+                                         	min.cleanable.dirty.ratio             
+                                         	min.compaction.lag.ms                 
+                                         	min.insync.replicas                   
+                                         	preallocate                           
+                                         	remote.storage.enable                 
+                                         	retention.bytes                       
+                                         	retention.ms                          
+                                         	segment.bytes                         
+                                         	segment.index.bytes                   
+                                         	segment.jitter.ms                     
+                                         	segment.ms                            
+                                         	unclean.leader.election.enable        
+                                         See the Kafka documentation for full   
+                                           details on the topic configs. It is  
+                                           supported only in combination with --
+                                           create if --bootstrap-server option  
+                                           is used (the kafka-configs CLI       
+                                           supports altering topic configs with 
+                                           a --bootstrap-server option).        
+--create                                 Create a new topic.                    
+--delete                                 Delete a topic                         
+--delete-config <String: name>           A topic configuration override to be   
+                                           removed for an existing topic (see   
+                                           the list of configurations under the 
+                                           --config option). Not supported with 
+                                           the --bootstrap-server option.       
+--describe                               List details for the given topics.     
+--disable-rack-aware                     Disable rack aware replica assignment  
+--exclude-internal                       exclude internal topics when running   
+                                           list or describe command. The        
+                                           internal topics will be listed by    
+                                           default                              
+--help                                   Print usage information.               
+--if-exists                              if set when altering or deleting or    
+                                           describing topics, the action will   
+                                           only execute if the topic exists.    
+--if-not-exists                          if set when creating topics, the       
+                                           action will only execute if the      
+                                           topic does not already exist.        
+--list                                   List all available topics.             
+--partitions <Integer: # of partitions>  The number of partitions for the topic 
+                                           being created or altered (WARNING:   
+                                           If partitions are increased for a    
+                                           topic that has a key, the partition  
+                                           logic or ordering of the messages    
+                                           will be affected). If not supplied   
+                                           for create, defaults to the cluster  
+                                           default.                             
+--replica-assignment <String:            A list of manual partition-to-broker   
+  broker_id_for_part1_replica1 :           assignments for the topic being      
+  broker_id_for_part1_replica2 ,           created or altered.                  
+  broker_id_for_part2_replica1 :                                                
+  broker_id_for_part2_replica2 , ...>                                           
+--replication-factor <Integer:           The replication factor for each        
+  replication factor>                      partition in the topic being         
+                                           created. If not supplied, defaults   
+                                           to the cluster default.              
+--topic <String: topic>                  The topic to create, alter, describe   
+                                           or delete. It also accepts a regular 
+                                           expression, except for --create      
+                                           option. Put topic name in double     
+                                           quotes and use the '\' prefix to     
+                                           escape regular expression symbols; e.
+                                           g. "test\.topic".                    
+--topic-id <String: topic-id>            The topic-id to describe.This is used  
+                                           only with --bootstrap-server option  
+                                           for describing topics.               
+--topics-with-overrides                  if set when describing topics, only    
+                                           show topics that have overridden     
+                                           configs                              
+--unavailable-partitions                 if set when describing topics, only    
+                                           show partitions whose leader is not  
+                                           available                            
+--under-min-isr-partitions               if set when describing topics, only    
+                                           show partitions whose isr count is   
+                                           less than the configured minimum.    
+--under-replicated-partitions            if set when describing topics, only    
+                                           show under replicated partitions     
+--version                                Display Kafka version.
+
+
+[Example]
+Once the Kafka broker is started, we can verify that it is working by performing some
+simple operations against the cluster creating a test topic, producing some messages,
+and consuming the same messages.
+Create and verify a topic:
+# /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --
+create
+--replication-factor 1 --partitions 1 --topic test
+Created topic "test".
+# /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092
+--describe --topic test
+Topic:test PartitionCount:1 ReplicationFactor:1 Configs:
+ Topic: test Partition: 0 Leader: 0 Replicas: 0 Isr: 0
+#
+Produce messages to a test topic (use Ctrl-C to stop the producer at any time):
+# /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server
+localhost:9092 --topic test
+Test Message 1
+Test Message 2
+^C
+#
+Consume messages from a test topic:
+# /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server
+localhost:9092 --topic test --from-beginning
+Test Message 1
+Test Message 2
+^C
+Proccessed a total of 2 messages
+
+
+chapter3:
+
+*Constructing a Kafka Producer*
+
+The first step in writing messages to Kafka is to create a producer object with the
+properties you want to pass to the producer. A Kafka producer has three mandatory
+properties:
+
+1-bootstrap.servers
+List of host:port pairs of brokers that the producer will use to establish initial
+connection to the Kafka cluster. This list doesn’t need to include all brokers, since
+the producer will get more information after the initial connection. But it is rec‐
+ommended to include at least two, so in case one broker goes down, the producer
+will still be able to connect to the cluster.
+
+2-key.serializer
+Name of a class that will be used to serialize the keys of the records we will pro‐
+duce to Kafka. Kafka brokers expect byte arrays as keys and values of messages.
+However, the producer interface allows, using parameterized types, any Java
+object to be sent as a key and value. This makes for very readable code, but it also
+means that the producer has to know how to convert these objects to byte arrays.
+key.serializer should be set to a name of a class that implements the
+org.apache.kafka.common.serialization.Serializer interface. The producer
+will use this class to serialize the key object to a byte array. The Kafka client pack‐
+age includes ByteArraySerializer (which doesn’t do much),
+StringSerializer, and IntegerSerializer, so if you use common types, there
+is no need to implement your own serializers. Setting key.serializer is
+required even if you intend to send only values.
+
+value.serializer
+Name of a class that will be used to serialize the values of the records we will pro‐
+duce to Kafka. The same way you set key.serializer to a name of a class that
+will serialize the message key object to a byte array, you set value.serializer to
+a class that will serialize the message value object.
+
+
+The following code snippet shows how to create a new producer by setting just the
+mandatory parameters and using defaults for everything else:
+##
+Properties kafkaProps = new Properties(); 
+
+kafkaProps.put("bootstrap.servers", "broker1:9092,broker2:9092");
+
+kafkaProps.put("key.serializer",
+ "org.apache.kafka.common.serialization.StringSerializer"); 
+kafkaProps.put("value.serializer",
+ "org.apache.kafka.common.serialization.StringSerializer");
+
+producer = new KafkaProducer<String, String>(kafkaProps);
+##
+(Explain)
+We start with a Properties object.
+Since we plan on using strings for message key and value, we use the built-in
+StringSerializer.
+Here we create a new producer by setting the appropriate key and value types
+and passing the Properties object.
+
+
+The simplest way to send a message is as follows:
+##
+ProducerRecord<String, String> record = new ProducerRecord<>("CustomerCountry", "Precision Products", "France"); 
+
+try {
+ producer.send(record); 
+} catch (Exception e) {
+ e.printStackTrace(); 
+}
+##
+
+
+The simplest way to send a message synchronously is as follows:
+##
+ProducerRecord<String, String> record =
+ new ProducerRecord<>("CustomerCountry", "Precision Products", "France");
+try {
+ producer.send(record).get(); 
+} catch (Exception e) {
+ e.printStackTrace(); 
+}
+##
+
+
+n order to send messages asynchronously and still handle error scenarios, the pro‐
+ducer supports adding a callback when sending a record. Here is an example of how
+we use a callback:
+##
+private class DemoProducerCallback implements Callback { 
+ @Override
+ public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+ if (e != null) {
+ e.printStackTrace(); 
+ }
+ }
+}
+##
+
+
+
+
+Here is an example of how to produce generated Avro objects to Kafka (see the Avro
+Documentation for how to use code generation with Avro):
+
+##
+Properties props = new Properties();
+
+props.put("bootstrap.servers", "localhost:9092");
+props.put("key.serializer","io.confluent.kafka.serializers.KafkaAvroSerializer");
+props.put("value.serializer","io.confluent.kafka.serializers.KafkaAvroSerializer"); 
+
+props.put("schema.registry.url", schemaUrl);
+ 
+String topic = "customerContacts";
+Producer<String, Customer> producer = new KafkaProducer<String,Customer>(props); 
+
+// We keep producing new events until someone ctrl-c
+while (true) {
+ Customer customer = CustomerGenerator.getNext(); 
+ System.out.println("Generated customer " + customer.toString());
+ ProducerRecord<String, Customer> record = new ProducerRecord<>(topic, customer.getName(), customer); 
+ producer.send(record);
+}
+##
+
+
+1-We use the KafkaAvroSerializer to serialize our objects with Avro. Note that
+the KafkaAvroSerializer can also handle primitives, which is why we can later
+use String as the record key and our Customer object as the value.
+
+2-schema.registry.url is a new parameter. This simply points to where we store
+the schemas.
+
+3-Customer is our generated object. We tell the producer that our records will con‐
+tain Customer as the value.
+
+4-Customer class is not a regular Java class (POJO), but rather a specialized Avro
+object, generated from a schema using Avro code generation. The Avro serializer
+can only serialize Avro objects, not POJO. Generating Avro classes can be done
+either using the avro-tools .jar or the Avro Maven Plugin, both part of Apache
+Avro. See the Apache Avro Getting Started (Java) guide for details on how to gen‐
+erate Avro classes.
+
+5-We also instantiate ProducerRecord with Customer as the value type, and pass a
+Customer object when creating the new record.
+
+6-That’s it. We send the record with our Customer object and KafkaAvroSerial
+izer will handle the rest
+
+
+
+
+
+What if you prefer to use generic Avro objects rather than the generated Avro objects?
+No worries. In this case, you just need to provide the schema:
+
+##
+Properties props = new Properties();
+props.put("bootstrap.servers", "localhost:9092");
+props.put("key.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer"); 
+props.put("value.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+props.put("schema.registry.url", url); 
+
+String schemaString =
+ "{\"namespace\": \"customerManagement.avro\",
+ "\"type\": \"record\", " + 
+ "\"name\": \"Customer\"," +
+ "\"fields\": [" +
+ "{\"name\": \"id\", \"type\": \"int\"}," +
+ "{\"name\": \"name\", \"type\": \"string\"}," +
+ "{\"name\": \"email\", \"type\": " + "[\"null\",\"string\"], " +
+ "\"default\":\"null\" }" +
+ "]}";
+
+Producer<String, GenericRecord> producer = new KafkaProducer<String, GenericRecord>(props);
+
+Schema.Parser parser = new Schema.Parser();
+Schema schema = parser.parse(schemaString);
+
+for (int nCustomers = 0; nCustomers < customers; nCustomers++) {
+ String name = "exampleCustomer" + nCustomers;
+ String email = "example " + nCustomers + "@example.com";
+ 
+ GenericRecord customer = new GenericData.Record(schema); 
+ customer.put("id", nCustomers);
+ customer.put("name", name);
+ customer.put("email", email);
+ 
+ ProducerRecord<String, GenericRecord> data = new ProducerRecord<String, GenericRecord>("customerContacts", name, customer);
+ producer.send(data);
+}
+##
+
+1-We still use the same KafkaAvroSerializer.
+2-And we provide the URI of the same schema registry.
+3-But now we also need to provide the Avro schema, since it is not provided by the
+Avro-generated object.
+4-Our object type is an Avro GenericRecord, which we initialize with our schema
+and the data we want to write.
+5-Then the value of the ProducerRecord is simply a GenericRecord that contains
+our schema and data. The serializer will know how to get the schema from this
+record, store it in the schema registry, and serialize the object data.
+
+
+Here is an example of a custom partitioner:
+
+##(p86)
+import org.apache.kafka.clients.producer.Partitioner;
+import org.apache.kafka.common.Cluster;
+import org.apache.kafka.common.PartitionInfo;
+import org.apache.kafka.common.record.InvalidRecordException;
+import org.apache.kafka.common.utils.Utils;
+public class BananaPartitioner implements Partitioner {
+ public void configure(Map<String, ?> configs) {} 
+ public int partition(String topic, Object key, byte[] keyBytes,
+ Object value, byte[] valueBytes,
+ Cluster cluster) {
+ List<PartitionInfo> partitions = cluster.partitionsForTopic(topic);
+ int numPartitions = partitions.size();
+ if ((keyBytes == null) || (!(key instanceOf String))) 
+ throw new InvalidRecordException("We expect all messages " +
+ "to have customer name as key")
+ if (((String) key).equals("Banana"))
+ return numPartitions - 1; // Banana will always go to last partition
+ // Other records will get hashed to the rest of the partitions
+ return (Math.abs(Utils.murmur2(keyBytes)) % (numPartitions - 1))
+ }
+ public void close() {}
+}
+##
+
+Partitioner interface includes configure, partition, and close methods. Here
+we only implement partition, although we really should have passed the special
+customer name through configure instead of hard-coding it in partition.
+We only expect String keys, so we throw an exception if that is not the case.

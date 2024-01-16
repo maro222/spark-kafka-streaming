@@ -1,0 +1,7 @@
+https://sparkbyexamples.com/kafka/creating-apache-kafka-topic/
+https://huzzefakhan.medium.com/install-and-setup-apache-kafka-on-linux-b430d8796dae
+
+https://spark.apache.org/docs/latest/structured-streaming-kafka-integration.html
+https://sparkbyexamples.com/spark/spark-streaming-with-kafka/https://sparkbyexamples.com/spark/spark-streaming-with-kafka/https://sparkbyexamples.com/
+https://spark.apache.org/docs/latest/streaming-programming-guide.html#a-quick-example
+https://sparkbyexamples.com/pyspark-tutorial/
