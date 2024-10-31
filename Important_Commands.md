@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/4ccafcf8-5f8a-4840-bae9-c393104f07b8)# Apache Kafka CLI Cheat Sheet
+# Apache Kafka CLI Cheat Sheet
 
 ## Essential Commands
 
